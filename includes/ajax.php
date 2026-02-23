@@ -23,7 +23,14 @@ function eol_send_otp_ajax(): void
   $user = get_user_by('email', $email);
   if (!$user) {
     $user_id = wp_create_user($email, wp_generate_password(), $email);
-    $user    = get_user_by('id', $user_id);
+    if (is_wp_error($user_id)) {
+      wp_send_json_error('Could not create user');
+    }
+    $user = get_user_by('id', $user_id);
+  }
+
+  if (!$user) {
+    wp_send_json_error('User not found');
   }
 
   $otp = eol_generate_otp();
