@@ -1,6 +1,7 @@
 jQuery(function ($) {
   $("#eol-email-form").on("submit", function (e) {
     e.preventDefault();
+    $("#eol-msg").text("");
 
     $.post(
       EOL.ajax,
@@ -23,6 +24,7 @@ jQuery(function ($) {
 
   $("#eol-otp-form").on("submit", function (e) {
     e.preventDefault();
+    $("#eol-msg").text("");
 
     $.post(
       EOL.ajax,
