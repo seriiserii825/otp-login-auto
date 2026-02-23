@@ -111,6 +111,10 @@ function eol_render_settings_page(): void
 
       <?php submit_button('Save settings'); ?>
     </form>
+
+    <h2>Usage</h2>
+    <p>Place this shortcode on any page where you want the login form to appear:</p>
+    <code style="display:inline-block; padding: 6px 10px; background: #f0f0f1; font-size: 14px;">[email_otp_login]</code>
   </div>
   <?php
 }
