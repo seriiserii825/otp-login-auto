@@ -27,6 +27,9 @@ function eol_send_otp_ajax(): void
       wp_send_json_error('Could not create user');
     }
     $user = get_user_by('id', $user_id);
+
+    $user_ttl = (int) get_option('eol_user_ttl', 1) * 60;
+    wp_schedule_single_event(time() + $user_ttl, 'eol_delete_user', [$user_id]);
   }
 
   if (!$user) {

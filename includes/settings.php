@@ -28,6 +28,11 @@ add_action('admin_init', function () {
     'sanitize_callback' => 'eol_sanitize_ttl',
     'default'           => 5,
   ]);
+
+  register_setting('eol_settings_group', 'eol_user_ttl', [
+    'sanitize_callback' => 'eol_sanitize_ttl',
+    'default'           => 1,
+  ]);
 });
 
 /**
@@ -87,6 +92,18 @@ function eol_render_settings_page(): void
           type="number"
           name="eol_otp_ttl"
           value="<?php echo esc_attr(get_option('eol_otp_ttl', 5)); ?>"
+          min="1"
+          style="width: 80px;"
+        /> minutes
+      </label>
+
+      <h2>User Auto-Deletion</h2>
+      <p>Automatically delete users created via OTP login after this time.</p>
+      <label>
+        <input
+          type="number"
+          name="eol_user_ttl"
+          value="<?php echo esc_attr(get_option('eol_user_ttl', 1)); ?>"
           min="1"
           style="width: 80px;"
         /> minutes

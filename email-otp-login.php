@@ -16,3 +16,4 @@ require_once __DIR__ . '/includes/settings.php';
 require_once __DIR__ . '/includes/otp.php';
 require_once __DIR__ . '/includes/shortcode.php';
 require_once __DIR__ . '/includes/ajax.php';
+require_once __DIR__ . '/includes/cleanup.php';
