@@ -3,15 +3,15 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * Allowed domains for OTP login.
- * Add or remove domains here to control who can log in.
+ * Returns the list of allowed email domains.
+ * Managed via Settings > OTP Login in the admin panel.
  */
 function eol_allowed_domains(): array
 {
-  return [
-    'lc-otp.local',
-    'bludelego.it',
-    'company.com',
-    'example.org',
-  ];
+  $raw = get_option('eol_domains', '');
+  if ($raw === '') return [];
+
+  return array_filter(
+    array_map('trim', explode("\n", $raw))
+  );
 }

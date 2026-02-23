@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) exit;
 define('EOL_PLUGIN_FILE', __FILE__);
 
 require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/settings.php';
 require_once __DIR__ . '/includes/otp.php';
 require_once __DIR__ . '/includes/shortcode.php';
 require_once __DIR__ . '/includes/ajax.php';
