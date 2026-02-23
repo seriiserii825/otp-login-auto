@@ -15,6 +15,8 @@ if (!defined('ABSPATH')) exit;
 function eol_allowed_domains(): array
 {
   return [
+    'lc-otp.local',
+    'bludelego.it',
     'company.com',
     'example.org',
   ];
