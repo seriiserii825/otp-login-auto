@@ -1,0 +1,38 @@
+#eol-email-form,
+#eol-otp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 360px;
+}
+
+#eol-email-form input,
+#eol-otp-form input {
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#eol-email-form button,
+#eol-otp-form button {
+  padding: 10px 14px;
+  font-size: 15px;
+  background: #0073aa;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#eol-email-form button:hover,
+#eol-otp-form button:hover {
+  background: #005d8c;
+}
+
+#eol-msg {
+  margin-top: 10px;
+  font-size: 14px;
+}

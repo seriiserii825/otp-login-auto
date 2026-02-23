@@ -7,6 +7,13 @@ if (!defined('ABSPATH')) exit;
  * Renders the email + OTP login forms.
  */
 add_shortcode('email_otp_login', function () {
+  wp_enqueue_style(
+    'email-otp-login',
+    plugin_dir_url(EOL_PLUGIN_FILE) . 'assets/otp.css',
+    [],
+    null
+  );
+
   wp_enqueue_script(
     'email-otp-login',
     plugin_dir_url(EOL_PLUGIN_FILE) . 'assets/otp.js',
