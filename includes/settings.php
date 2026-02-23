@@ -16,14 +16,28 @@ add_action('admin_menu', function () {
 });
 
 /**
- * Register the option and its sanitization callback.
+ * Register the options and their sanitization callbacks.
  */
 add_action('admin_init', function () {
   register_setting('eol_settings_group', 'eol_domains', [
     'sanitize_callback' => 'eol_sanitize_domains',
     'default'           => '',
   ]);
+
+  register_setting('eol_settings_group', 'eol_otp_ttl', [
+    'sanitize_callback' => 'eol_sanitize_ttl',
+    'default'           => 5,
+  ]);
 });
+
+/**
+ * Sanitize TTL: integer, minimum 1 minute.
+ */
+function eol_sanitize_ttl($raw): int
+{
+  $value = (int) $raw;
+  return max(1, $value);
+}
 
 /**
  * Sanitize: trim lines, remove empty ones, lowercase.
@@ -51,12 +65,13 @@ function eol_render_settings_page(): void
   if (!current_user_can('manage_options')) return;
   ?>
   <div class="wrap">
-    <h1>OTP Login — Allowed Domains</h1>
-    <p>One domain per line. Only users with these email domains will be able to log in.</p>
+    <h1>OTP Login Settings</h1>
 
     <form method="post" action="options.php">
       <?php settings_fields('eol_settings_group'); ?>
 
+      <h2>Allowed Domains</h2>
+      <p>One domain per line. Only users with these email domains will be able to log in.</p>
       <textarea
         name="eol_domains"
         rows="10"
@@ -65,7 +80,19 @@ function eol_render_settings_page(): void
         style="font-family: monospace;"
       ><?php echo esc_textarea(get_option('eol_domains', '')); ?></textarea>
 
-      <?php submit_button('Save domains'); ?>
+      <h2>OTP Expiration</h2>
+      <p>How long the OTP code remains valid after sending.</p>
+      <label>
+        <input
+          type="number"
+          name="eol_otp_ttl"
+          value="<?php echo esc_attr(get_option('eol_otp_ttl', 5)); ?>"
+          min="1"
+          style="width: 80px;"
+        /> minutes
+      </label>
+
+      <?php submit_button('Save settings'); ?>
     </form>
   </div>
   <?php

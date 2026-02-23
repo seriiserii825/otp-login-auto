@@ -29,7 +29,11 @@ function eol_send_otp_ajax(): void
   $otp = eol_generate_otp();
 
   update_user_meta($user->ID, 'eol_otp',     $otp);
-  update_user_meta($user->ID, 'eol_otp_exp', time() + 300);
+  $ttl = (int) get_option('eol_otp_ttl', 5) * 60;
+  update_user_meta($user->ID, 'eol_otp_exp', time() + $ttl);
+
+  // remove wp_send_json_error to prevent revealing if email exists
+
 
   eol_send_otp($email, $otp);
 

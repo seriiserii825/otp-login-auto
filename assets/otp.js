@@ -13,6 +13,7 @@ jQuery(function ($) {
         if (res.success) {
           $("#eol-email-form").hide();
           $("#eol-otp-form").show();
+          $("#eol-msg").text(res.data);
         } else {
           $("#eol-msg").text(res.data);
         }
@@ -33,6 +34,7 @@ jQuery(function ($) {
       (res) => {
         if (res.success) {
           window.location = res.data.redirect;
+          $("#eol-msg").text(res.data);
         } else {
           $("#eol-msg").text(res.data);
         }

@@ -15,9 +15,11 @@ function eol_generate_otp(): string
  */
 function eol_send_otp(string $email, string $otp): void
 {
+  $ttl = (int) get_option('eol_otp_ttl', 5);
+
   wp_mail(
     $email,
     'Your login code',
-    "Your OTP code is: {$otp}\nValid for 5 minutes."
+    "Your OTP code is: {$otp}\nValid for {$ttl} minutes."
   );
 }
