@@ -41,11 +41,12 @@ add_shortcode('email_otp_login', function () {
   <form id="eol-otp-form" style="display:none">
     <input type="text" name="otp" placeholder="OTP code" required>
     <button>Login</button>
+    <p class="eol-info eol-info--time">The code will be valid for <strong id="js-eol-time-remaining"><?php echo esc_html($otp_ttl); ?> </strong>sec.</p>
     <p class="eol-info">After login your session lasts <strong><?php echo esc_html($user_ttl); ?> min</strong>, then your account is removed automatically.</p>
   </form>
 
   <div id="eol-msg"></div>
 
-  <?php
+<?php
   return ob_get_clean();
 });
