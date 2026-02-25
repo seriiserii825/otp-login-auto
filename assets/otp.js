@@ -19,15 +19,17 @@ jQuery(function ($) {
           $("#eol-email-form").hide();
           $("#eol-otp-form").show();
           msg(res.data);
+
+          startTimer();
         } else {
           msg(res.data, true);
+
+          startTimer();
         }
       },
     ).fail((xhr) => {
       console.error("eol_send_otp failed", xhr.status, xhr.responseText);
       msg("Request failed (" + xhr.status + "). Check console.", true);
-
-      startTimer();
     });
   });
 
@@ -66,7 +68,7 @@ jQuery(function ($) {
       }
       const minutes = Math.floor(timeRemaining / 60);
       const seconds = timeRemaining % 60;
-      timerEl.text(`Time remaining: ${minutes}:${seconds.toString().padStart(2, "0")}`);
+      timerEl.text(`${minutes}:${seconds.toString().padStart(2, "0")}`);
       timeRemaining--;
     }, 1000);
   }
