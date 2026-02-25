@@ -1,7 +1,11 @@
 jQuery(function ($) {
+  function msg(text, isError) {
+    $("#eol-msg").text(text).toggleClass("is-error", !!isError);
+  }
+
   $("#eol-email-form").on("submit", function (e) {
     e.preventDefault();
-    $("#eol-msg").text("");
+    msg("");
 
     $.post(
       EOL.ajax,
@@ -14,17 +18,20 @@ jQuery(function ($) {
         if (res.success) {
           $("#eol-email-form").hide();
           $("#eol-otp-form").show();
-          $("#eol-msg").text(res.data);
+          msg(res.data);
         } else {
-          $("#eol-msg").text(res.data);
+          msg(res.data, true);
         }
       },
-    );
+    ).fail((xhr) => {
+      console.error("eol_send_otp failed", xhr.status, xhr.responseText);
+      msg("Request failed (" + xhr.status + "). Check console.", true);
+    });
   });
 
   $("#eol-otp-form").on("submit", function (e) {
     e.preventDefault();
-    $("#eol-msg").text("");
+    msg("");
 
     $.post(
       EOL.ajax,
@@ -36,11 +43,13 @@ jQuery(function ($) {
       (res) => {
         if (res.success) {
           window.location = res.data.redirect;
-          $("#eol-msg").text(res.data);
         } else {
-          $("#eol-msg").text(res.data);
+          msg(res.data, true);
         }
       },
-    );
+    ).fail((xhr) => {
+      console.error("eol_verify_otp failed", xhr.status, xhr.responseText);
+      msg("Request failed (" + xhr.status + "). Check console.", true);
+    });
   });
 });

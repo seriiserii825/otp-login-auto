@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) exit;
  * Creates a new WP user if one doesn't exist yet.
  */
 add_action('wp_ajax_nopriv_eol_send_otp', 'eol_send_otp_ajax');
+add_action('wp_ajax_eol_send_otp', fn() => wp_send_json_error('You are already logged in'));
 
 function eol_send_otp_ajax(): void
 {
