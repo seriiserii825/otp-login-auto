@@ -33,7 +33,22 @@ add_action('admin_init', function () {
     'sanitize_callback' => 'eol_sanitize_ttl',
     'default'           => 1,
   ]);
+
+  register_setting('eol_settings_group', 'eol_user_role', [
+    'sanitize_callback' => 'eol_sanitize_role',
+    'default'           => 'subscriber',
+  ]);
 });
+
+/**
+ * Sanitize role: must be a valid WP role slug.
+ */
+function eol_sanitize_role(string $raw): string
+{
+  $valid = array_keys(wp_roles()->roles);
+  $slug  = sanitize_key($raw);
+  return in_array($slug, $valid, true) ? $slug : 'subscriber';
+}
 
 /**
  * Sanitize TTL: integer, minimum 1 minute.
@@ -108,6 +123,22 @@ function eol_render_settings_page(): void
           style="width: 80px;"
         /> minutes
       </label>
+
+      <h2>New User Role</h2>
+      <p>Role assigned to users created automatically via OTP login.</p>
+      <select name="eol_user_role">
+        <?php
+        $saved = get_option('eol_user_role', 'subscriber');
+        foreach (wp_roles()->roles as $slug => $data) {
+          printf(
+            '<option value="%s"%s>%s</option>',
+            esc_attr($slug),
+            selected($saved, $slug, false),
+            esc_html($data['name'])
+          );
+        }
+        ?>
+      </select>
 
       <?php submit_button('Save settings'); ?>
     </form>
