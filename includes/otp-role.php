@@ -43,3 +43,15 @@ function restrict_custom_pages_access()
   }
 }
 add_action('template_redirect', 'restrict_custom_pages_access');
+
+add_action('after_setup_theme', function () {
+  if (!is_user_logged_in()) {
+    return;
+  }
+
+  $user = wp_get_current_user();
+
+  if (in_array('otp', (array) $user->roles, true)) {
+    show_admin_bar(false);
+  }
+});
