@@ -17,6 +17,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), function ($links)
   return $links;
 });
 
+require_once __DIR__ . '/includes/otp-role.php';
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/settings.php';
 require_once __DIR__ . '/includes/otp.php';
