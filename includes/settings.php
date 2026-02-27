@@ -38,7 +38,22 @@ add_action('admin_init', function () {
     'sanitize_callback' => 'eol_sanitize_role',
     'default'           => 'subscriber',
   ]);
+
+  register_setting('eol_settings_group', 'eol_allowed_pages', [
+    'sanitize_callback' => 'eol_sanitize_page_ids',
+    'default'           => '',
+  ]);
 });
+
+/**
+ * Sanitize page IDs: comma-separated integers.
+ */
+function eol_sanitize_page_ids(string $raw): string
+{
+  $ids = array_map('intval', explode(',', $raw));
+  $ids = array_filter($ids, fn($id) => $id > 0);
+  return implode(',', array_unique($ids));
+}
 
 /**
  * Sanitize role: must be a valid WP role slug.
@@ -139,6 +154,16 @@ function eol_render_settings_page(): void
         }
         ?>
       </select>
+
+      <h2>OTP Role Allowed Pages</h2>
+      <p>Page IDs accessible to the <code>otp</code> role. Comma-separated, e.g. <code>42, 55, 101</code>.</p>
+      <input
+        type="text"
+        name="eol_allowed_pages"
+        value="<?php echo esc_attr(get_option('eol_allowed_pages', '')); ?>"
+        style="width: 300px;"
+        placeholder="42, 55, 101"
+      />
 
       <?php submit_button('Save settings'); ?>
     </form>

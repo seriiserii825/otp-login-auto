@@ -16,9 +16,11 @@ add_action('init', 'add_otp_role');
 
 
 // 2️⃣ Массив ID страниц, доступных кастомной роли
-function get_custom_pages_for_viewer()
+function get_custom_pages_for_viewer(): array
 {
-  return [42, 55, 101]; // <-- сюда добавь ID страниц
+  $raw = get_option('eol_allowed_pages', '');
+  if ($raw === '') return [];
+  return array_map('intval', explode(',', $raw));
 }
 
 
